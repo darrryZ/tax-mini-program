@@ -127,7 +127,7 @@ function compareMethods(principal, annualRate, months) {
       totalInterest: equalPrincipal.totalInterest,
       totalPayment: equalPrincipal.totalPayment
     },
-    interestDifference: parseFloat((equalPrincipal.totalInterest - equalPayment.totalInterest).toFixed(2))
+    interestDifference: parseFloat((equalPayment.totalInterest - equalPrincipal.totalInterest).toFixed(2))
   };
 }
 

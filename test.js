@@ -86,7 +86,7 @@ assert(loanResult2.schedule.length === 360, 'Loan: schedule has 360 months');
 const comparison = loanCalculator.compareMethods(1000000, 4.9, 360);
 assert(comparison.equalPayment.totalInterest > 0, 'Comparison: equal payment has interest');
 assert(comparison.equalPrincipal.totalInterest > 0, 'Comparison: equal principal has interest');
-assert(comparison.interestDifference < 0, 'Comparison: equal principal has less interest');
+assert(comparison.interestDifference > 0, 'Comparison: equal payment has more interest (savings with equal principal)');
 
 console.log('\n=== Edge Cases Tests ===\n');
 

@@ -48,9 +48,7 @@ const DEFAULT_RATES = {
  */
 function calculateInsurance(salary, rates) {
   // Use default rates if rates is not provided or is null
-  if (!rates) {
-    rates = DEFAULT_RATES;
-  }
+  const effectiveRates = rates || DEFAULT_RATES;
   
   const result = {
     salary: parseFloat(salary.toFixed(2)),
@@ -62,28 +60,28 @@ function calculateInsurance(salary, rates) {
   };
   
   // 养老保险
-  result.personal.pension = parseFloat((salary * rates.pension.personal).toFixed(2));
-  result.company.pension = parseFloat((salary * rates.pension.company).toFixed(2));
+  result.personal.pension = parseFloat((salary * effectiveRates.pension.personal).toFixed(2));
+  result.company.pension = parseFloat((salary * effectiveRates.pension.company).toFixed(2));
   
   // 医疗保险
-  result.personal.medical = parseFloat((salary * rates.medical.personal).toFixed(2));
-  result.company.medical = parseFloat((salary * rates.medical.company).toFixed(2));
+  result.personal.medical = parseFloat((salary * effectiveRates.medical.personal).toFixed(2));
+  result.company.medical = parseFloat((salary * effectiveRates.medical.company).toFixed(2));
   
   // 失业保险
-  result.personal.unemployment = parseFloat((salary * rates.unemployment.personal).toFixed(2));
-  result.company.unemployment = parseFloat((salary * rates.unemployment.company).toFixed(2));
+  result.personal.unemployment = parseFloat((salary * effectiveRates.unemployment.personal).toFixed(2));
+  result.company.unemployment = parseFloat((salary * effectiveRates.unemployment.company).toFixed(2));
   
   // 工伤保险
-  result.personal.injury = parseFloat((salary * rates.injury.personal).toFixed(2));
-  result.company.injury = parseFloat((salary * rates.injury.company).toFixed(2));
+  result.personal.injury = parseFloat((salary * effectiveRates.injury.personal).toFixed(2));
+  result.company.injury = parseFloat((salary * effectiveRates.injury.company).toFixed(2));
   
   // 生育保险
-  result.personal.maternity = parseFloat((salary * rates.maternity.personal).toFixed(2));
-  result.company.maternity = parseFloat((salary * rates.maternity.company).toFixed(2));
+  result.personal.maternity = parseFloat((salary * effectiveRates.maternity.personal).toFixed(2));
+  result.company.maternity = parseFloat((salary * effectiveRates.maternity.company).toFixed(2));
   
   // 住房公积金
-  result.personal.housingFund = parseFloat((salary * rates.housingFund.personal).toFixed(2));
-  result.company.housingFund = parseFloat((salary * rates.housingFund.company).toFixed(2));
+  result.personal.housingFund = parseFloat((salary * effectiveRates.housingFund.personal).toFixed(2));
+  result.company.housingFund = parseFloat((salary * effectiveRates.housingFund.company).toFixed(2));
   
   // 计算总计
   result.personalTotal = parseFloat((
