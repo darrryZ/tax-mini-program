@@ -1,0 +1,1 @@
+{ "pages": { "index": "pages/index/index", "calculator": "pages/calculator/calculator", "result": "pages/result/result", "settings": "pages/settings/settings" }, "window": { "navigationBarTitleText": "Tax Mini Program" } }
