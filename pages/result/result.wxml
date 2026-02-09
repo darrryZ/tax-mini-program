@@ -1,0 +1,15 @@
+<view>
+  <text>Result Page</text>
+  <view>
+    <text>Date: 2026-02-09</text>
+    <text>Time: 06:43:21 UTC</text>
+  </view>
+  <view>
+    <text>Detailed Breakdown:</text>
+    <view>
+      <text>Item 1: Description and cost</text>
+      <text>Item 2: Description and cost</text>
+      <text>Item 3: Description and cost</text>
+    </view>
+  </view>
+</view>
