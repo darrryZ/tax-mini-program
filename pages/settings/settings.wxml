@@ -1,0 +1,14 @@
+<view class="container">
+  <text class="title">Settings</text>
+  <form>
+    <view>
+      <text>Option 1</text>
+      <switch></switch>
+    </view>
+    <view>
+      <text>Option 2</text>
+      <switch></switch>
+    </view>
+    <button formType="submit">Save</button>
+  </form>
+</view>
