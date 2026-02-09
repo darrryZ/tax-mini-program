@@ -46,7 +46,12 @@ const DEFAULT_RATES = {
  * @param {object} rates - 自定义缴费比例（可选）
  * @returns {object} 五险一金详细信息
  */
-function calculateInsurance(salary, rates = DEFAULT_RATES) {
+function calculateInsurance(salary, rates) {
+  // Use default rates if rates is not provided or is null
+  if (!rates) {
+    rates = DEFAULT_RATES;
+  }
+  
   const result = {
     salary: parseFloat(salary.toFixed(2)),
     personal: {},
@@ -110,7 +115,7 @@ function calculateInsurance(salary, rates = DEFAULT_RATES) {
  * @param {object} rates - 缴费比例
  * @returns {number} 扣除五险一金后的工资
  */
-function getNetSalaryAfterInsurance(salary, rates = DEFAULT_RATES) {
+function getNetSalaryAfterInsurance(salary, rates) {
   const insurance = calculateInsurance(salary, rates);
   return parseFloat((salary - insurance.personalTotal).toFixed(2));
 }
