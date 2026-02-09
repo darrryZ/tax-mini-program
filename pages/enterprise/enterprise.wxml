@@ -1,0 +1,97 @@
+<view class="container">
+  <view class="header">
+    <text class="title">企业成本计算器</text>
+  </view>
+
+  <view class="form">
+    <view class="form-item">
+      <text class="label">员工月工资（元）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="请输入月工资"
+        value="{{salary}}"
+        bindinput="onSalaryInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">员工数量</text>
+      <input 
+        class="input" 
+        type="number" 
+        placeholder="请输入员工数量"
+        value="{{employeeCount}}"
+        bindinput="onEmployeeCountInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">其他月度成本（元）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="办公设备、培训等（可选）"
+        value="{{otherCosts}}"
+        bindinput="onOtherCostsInput" />
+    </view>
+
+    <view class="button-group">
+      <button class="btn btn-primary" bindtap="calculate">计算</button>
+      <button class="btn btn-default" bindtap="reset">重置</button>
+    </view>
+  </view>
+
+  <view class="result" wx:if="{{result}}">
+    <view class="result-header">
+      <text class="result-title">计算结果</text>
+    </view>
+    
+    <view class="period-section">
+      <text class="period-title">月度成本</text>
+      <view class="cost-items">
+        <view class="cost-item">
+          <text class="cost-label">工资总额</text>
+          <text class="cost-value">¥{{result.monthly.totalSalary}}</text>
+        </view>
+        <view class="cost-item">
+          <text class="cost-label">五险一金（单位）</text>
+          <text class="cost-value">¥{{result.monthly.totalCompanyInsurance}}</text>
+        </view>
+        <view class="cost-item">
+          <text class="cost-label">其他成本</text>
+          <text class="cost-value">¥{{result.monthly.otherCosts}}</text>
+        </view>
+        <view class="cost-item total">
+          <text class="cost-label">月度总成本</text>
+          <text class="cost-value highlight">¥{{result.monthly.grandTotal}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="period-section">
+      <text class="period-title">年度成本</text>
+      <view class="cost-items">
+        <view class="cost-item">
+          <text class="cost-label">工资总额</text>
+          <text class="cost-value">¥{{result.annual.totalSalary}}</text>
+        </view>
+        <view class="cost-item">
+          <text class="cost-label">五险一金（单位）</text>
+          <text class="cost-value">¥{{result.annual.totalCompanyInsurance}}</text>
+        </view>
+        <view class="cost-item">
+          <text class="cost-label">其他成本</text>
+          <text class="cost-value">¥{{result.annual.otherCosts}}</text>
+        </view>
+        <view class="cost-item total">
+          <text class="cost-label">年度总成本</text>
+          <text class="cost-value highlight">¥{{result.annual.grandTotal}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-section">
+      <text class="info-text">💡 企业成本包括工资和单位承担的五险一金</text>
+      <text class="info-text">员工数量：{{result.monthly.employeeCount}} 人</text>
+    </view>
+  </view>
+</view>

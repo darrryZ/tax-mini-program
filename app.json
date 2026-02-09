@@ -1,11 +1,32 @@
 {
-  "pages": {
-    "index": "pages/index/index",
-    "calculator": "pages/calculator/calculator",
-    "result": "pages/result/result",
-    "settings": "pages/settings/settings"
-  },
+  "pages": [
+    "pages/index/index",
+    "pages/calculator/calculator",
+    "pages/insurance/insurance",
+    "pages/enterprise/enterprise",
+    "pages/loan/loan",
+    "pages/result/result",
+    "pages/settings/settings"
+  ],
   "window": {
-    "navigationBarTitleText": "Tax Mini Program"
+    "navigationBarTitleText": "税务计算工具",
+    "navigationBarBackgroundColor": "#07c160",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#07c160",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置"
+      }
+    ]
   }
 }

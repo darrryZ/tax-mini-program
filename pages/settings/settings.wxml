@@ -1,14 +1,27 @@
 <view class="container">
-  <text class="title">Settings</text>
-  <form>
-    <view>
-      <text>Option 1</text>
-      <switch></switch>
+  <view class="header">
+    <text class="title">设置</text>
+  </view>
+
+  <view class="settings-list">
+    <view class="settings-section">
+      <text class="section-title">关于</text>
+      <view class="settings-item">
+        <text class="item-label">应用名称</text>
+        <text class="item-value">税务计算工具</text>
+      </view>
+      <view class="settings-item">
+        <text class="item-label">版本</text>
+        <text class="item-value">1.0.0</text>
+      </view>
     </view>
-    <view>
-      <text>Option 2</text>
-      <switch></switch>
+
+    <view class="settings-section">
+      <text class="section-title">说明</text>
+      <view class="info-box">
+        <text class="info-text">本应用提供个税、五险一金、企业成本和贷款计算功能。</text>
+        <text class="info-text">计算结果仅供参考，具体以官方政策为准。</text>
+      </view>
     </view>
-    <button formType="submit">Save</button>
-  </form>
+  </view>
 </view>

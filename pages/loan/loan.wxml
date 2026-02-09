@@ -1,0 +1,125 @@
+<view class="container">
+  <view class="header">
+    <text class="title">贷款计算器</text>
+  </view>
+
+  <view class="form">
+    <view class="form-item">
+      <text class="label">贷款金额（元）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="请输入贷款金额"
+        value="{{principal}}"
+        bindinput="onPrincipalInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">年利率（%）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="如：4.9"
+        value="{{annualRate}}"
+        bindinput="onAnnualRateInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">贷款年限</text>
+      <input 
+        class="input" 
+        type="number" 
+        placeholder="请输入贷款年限"
+        value="{{years}}"
+        bindinput="onYearsInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">还款方式</text>
+      <radio-group bindchange="onLoanTypeChange">
+        <label class="radio">
+          <radio value="equalPayment" checked="{{loanType === 'equalPayment'}}" />
+          <text>等额本息</text>
+        </label>
+        <label class="radio">
+          <radio value="equalPrincipal" checked="{{loanType === 'equalPrincipal'}}" />
+          <text>等额本金</text>
+        </label>
+      </radio-group>
+    </view>
+
+    <view class="button-group">
+      <button class="btn btn-primary" bindtap="calculate">计算</button>
+      <button class="btn btn-default" bindtap="reset">重置</button>
+    </view>
+  </view>
+
+  <view class="result" wx:if="{{result}}">
+    <view class="result-header">
+      <text class="result-title">计算结果（{{result.type}}）</text>
+    </view>
+    
+    <view class="summary">
+      <view class="summary-item">
+        <text class="summary-label">贷款金额</text>
+        <text class="summary-value">¥{{result.principal}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">贷款期限</text>
+        <text class="summary-value">{{result.months}}个月</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">年利率</text>
+        <text class="summary-value">{{result.annualRate}}</text>
+      </view>
+      <view class="summary-item" wx:if="{{result.monthlyPayment}}">
+        <text class="summary-label">月还款额</text>
+        <text class="summary-value highlight">¥{{result.monthlyPayment}}</text>
+      </view>
+      <view class="summary-item" wx:if="{{result.firstMonthPayment}}">
+        <text class="summary-label">首月还款额</text>
+        <text class="summary-value highlight">¥{{result.firstMonthPayment}}</text>
+      </view>
+      <view class="summary-item" wx:if="{{result.lastMonthPayment}}">
+        <text class="summary-label">末月还款额</text>
+        <text class="summary-value">¥{{result.lastMonthPayment}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">支付总额</text>
+        <text class="summary-value">¥{{result.totalPayment}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">支付利息</text>
+        <text class="summary-value interest">¥{{result.totalInterest}}</text>
+      </view>
+    </view>
+
+    <view class="schedule-toggle" bindtap="toggleSchedule">
+      <text class="toggle-text">{{showSchedule ? '隐藏' : '查看'}}还款计划</text>
+      <text class="toggle-icon">{{showSchedule ? '▲' : '▼'}}</text>
+    </view>
+
+    <view class="schedule" wx:if="{{showSchedule}}">
+      <view class="schedule-header">
+        <text class="schedule-col">期数</text>
+        <text class="schedule-col">月供</text>
+        <text class="schedule-col">本金</text>
+        <text class="schedule-col">利息</text>
+      </view>
+      <view 
+        class="schedule-row" 
+        wx:for="{{result.schedule}}" 
+        wx:for-index="idx"
+        wx:key="month"
+        wx:if="{{idx < scheduleLimit}}">
+        <text class="schedule-col">{{item.month}}</text>
+        <text class="schedule-col">{{item.monthlyPayment}}</text>
+        <text class="schedule-col">{{item.principalPayment}}</text>
+        <text class="schedule-col">{{item.interestPayment}}</text>
+      </view>
+      <view class="load-more" wx:if="{{scheduleLimit < result.schedule.length}}" bindtap="loadMoreSchedule">
+        <text>加载更多</text>
+      </view>
+    </view>
+  </view>
+</view>
