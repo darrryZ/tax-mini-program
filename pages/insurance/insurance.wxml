@@ -59,6 +59,11 @@
       </view>
     </view>
 
+    <view class="chart-container">
+      <text class="chart-title">个人缴纳占比分布</text>
+      <canvas canvas-id="personalPieCanvas" class="chart-canvas"></canvas>
+    </view>
+
     <view class="detail-section">
       <text class="section-title">个人缴纳明细</text>
       <view class="detail-items">
@@ -79,6 +84,11 @@
           <text class="detail-value">¥{{result.personal.housingFund}}</text>
         </view>
       </view>
+    </view>
+
+    <view class="chart-container">
+      <text class="chart-title">单位缴纳占比分布</text>
+      <canvas canvas-id="companyPieCanvas" class="chart-canvas"></canvas>
     </view>
 
     <view class="detail-section">

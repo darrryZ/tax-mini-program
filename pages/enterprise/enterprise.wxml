@@ -67,6 +67,11 @@
       </view>
     </view>
 
+    <view class="chart-container">
+      <text class="chart-title">月度成本占比分布</text>
+      <canvas canvas-id="monthlyCostCanvas" class="chart-canvas"></canvas>
+    </view>
+
     <view class="period-section">
       <text class="period-title">年度成本</text>
       <view class="cost-items">
@@ -87,6 +92,11 @@
           <text class="cost-value highlight">¥{{result.annual.grandTotal}}</text>
         </view>
       </view>
+    </view>
+
+    <view class="chart-container">
+      <text class="chart-title">年度成本占比分布</text>
+      <canvas canvas-id="annualCostCanvas" class="chart-canvas"></canvas>
     </view>
 
     <view class="info-section">

@@ -94,6 +94,11 @@
       </view>
     </view>
 
+    <view class="chart-container">
+      <text class="chart-title">本金与利息占比</text>
+      <canvas canvas-id="loanPieCanvas" class="chart-canvas"></canvas>
+    </view>
+
     <view class="schedule-toggle" bindtap="toggleSchedule">
       <text class="toggle-text">{{showSchedule ? '隐藏' : '查看'}}还款计划</text>
       <text class="toggle-icon">{{showSchedule ? '▲' : '▼'}}</text>

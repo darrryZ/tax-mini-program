@@ -1,5 +1,9 @@
 // pages/enterprise/enterprise.js
 const costCalculator = require('../../utils/costCalculator.js');
+const wxCharts = require('../../utils/wxcharts.js');
+
+let monthlyCostChart = null;
+let annualCostChart = null;
 
 Page({
   data: {
@@ -56,6 +60,93 @@ Page({
     
     this.setData({
       result: result
+    }, () => {
+      // Render charts after data is set
+      this.renderCharts();
+    });
+  },
+
+  renderCharts: function() {
+    const result = this.data.result;
+    if (!result) return;
+
+    // Get system info for chart width
+    const systemInfo = wx.getSystemInfoSync();
+    const windowWidth = systemInfo.windowWidth;
+    const chartWidth = windowWidth * 0.9; // 90% of screen width
+
+    // Monthly cost breakdown
+    const monthlyData = [];
+    if (result.monthly.totalSalary > 0) {
+      monthlyData.push({ 
+        name: '工资总额', 
+        data: result.monthly.totalSalary, 
+        color: '#597ef7' 
+      });
+    }
+    if (result.monthly.totalCompanyInsurance > 0) {
+      monthlyData.push({ 
+        name: '五险一金', 
+        data: result.monthly.totalCompanyInsurance, 
+        color: '#73d13d' 
+      });
+    }
+    if (result.monthly.otherCosts > 0) {
+      monthlyData.push({ 
+        name: '其他成本', 
+        data: result.monthly.otherCosts, 
+        color: '#ff9c6e' 
+      });
+    }
+
+    monthlyCostChart = new wxCharts({
+      canvasId: 'monthlyCostCanvas',
+      type: 'pie',
+      series: monthlyData,
+      width: chartWidth,
+      height: 300,
+      dataLabel: true,
+      legend: true,
+      animation: true,
+      background: '#ffffff',
+      padding: 5
+    });
+
+    // Annual cost breakdown
+    const annualData = [];
+    if (result.annual.totalSalary > 0) {
+      annualData.push({ 
+        name: '工资总额', 
+        data: result.annual.totalSalary, 
+        color: '#597ef7' 
+      });
+    }
+    if (result.annual.totalCompanyInsurance > 0) {
+      annualData.push({ 
+        name: '五险一金', 
+        data: result.annual.totalCompanyInsurance, 
+        color: '#73d13d' 
+      });
+    }
+    if (result.annual.otherCosts > 0) {
+      annualData.push({ 
+        name: '其他成本', 
+        data: result.annual.otherCosts, 
+        color: '#ff9c6e' 
+      });
+    }
+
+    annualCostChart = new wxCharts({
+      canvasId: 'annualCostCanvas',
+      type: 'pie',
+      series: annualData,
+      width: chartWidth,
+      height: 300,
+      dataLabel: true,
+      legend: true,
+      animation: true,
+      background: '#ffffff',
+      padding: 5
     });
   },
 
@@ -66,5 +157,7 @@ Page({
       otherCosts: '',
       result: null
     });
+    monthlyCostChart = null;
+    annualCostChart = null;
   }
 });

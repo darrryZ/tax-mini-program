@@ -1,5 +1,8 @@
 // pages/loan/loan.js
 const loanCalculator = require('../../utils/loanCalculator.js');
+const wxCharts = require('../../utils/wxcharts.js');
+
+let loanPieChart = null;
 
 Page({
   data: {
@@ -82,6 +85,46 @@ Page({
       result: result,
       showSchedule: false,
       scheduleLimit: 12
+    }, () => {
+      // Render chart after data is set
+      this.renderChart();
+    });
+  },
+
+  renderChart: function() {
+    const result = this.data.result;
+    if (!result) return;
+
+    // Get system info for chart width
+    const systemInfo = wx.getSystemInfoSync();
+    const windowWidth = systemInfo.windowWidth;
+    const chartWidth = windowWidth * 0.9; // 90% of screen width
+
+    // Prepare chart data: principal vs interest
+    const chartData = [
+      { 
+        name: '贷款本金', 
+        data: result.principal, 
+        color: '#597ef7' 
+      },
+      { 
+        name: '总利息', 
+        data: result.totalInterest, 
+        color: '#ff7875' 
+      }
+    ];
+
+    loanPieChart = new wxCharts({
+      canvasId: 'loanPieCanvas',
+      type: 'pie',
+      series: chartData,
+      width: chartWidth,
+      height: 300,
+      dataLabel: true,
+      legend: true,
+      animation: true,
+      background: '#ffffff',
+      padding: 5
     });
   },
 
@@ -106,5 +149,6 @@ Page({
       showSchedule: false,
       scheduleLimit: 12
     });
+    loanPieChart = null;
   }
 });
