@@ -10,8 +10,7 @@ Page({
     // Initialize page data
     this.setData({
       date: new Date().toLocaleDateString('zh-CN'),
-      time: new Date().toLocaleTimeString('zh-CN'),
-      items: []
+      time: new Date().toLocaleTimeString('zh-CN')
     });
   }
 });
