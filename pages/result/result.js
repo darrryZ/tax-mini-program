@@ -8,9 +8,10 @@ Page({
 
   onLoad: function(options) {
     // Initialize page data
+    const now = new Date();
     this.setData({
-      date: new Date().toLocaleDateString('zh-CN'),
-      time: new Date().toLocaleTimeString('zh-CN')
+      date: now.toLocaleDateString('zh-CN'),
+      time: now.toLocaleTimeString('zh-CN')
     });
   }
 });
