@@ -25,6 +25,17 @@
       <text class="hint">提示：公积金缴纳基数可与工资基数不同</text>
     </view>
 
+    <view class="form-item">
+      <text class="label">公积金缴纳比例（%）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="不填则默认12%，范围7%-12%"
+        value="{{housingFundRate}}"
+        bindinput="onHousingFundRateInput" />
+      <text class="hint">提示：可自定义输入7%-12%之间的比例</text>
+    </view>
+
     <view class="button-group">
       <button class="btn btn-primary" bindtap="calculate">计算</button>
       <button class="btn btn-default" bindtap="reset">重置</button>
@@ -44,6 +55,10 @@
       <view class="summary-item" wx:if="{{result.salary !== result.housingFundBase}}">
         <text class="summary-label">公积金基数</text>
         <text class="summary-value">¥{{result.housingFundBase}}</text>
+      </view>
+      <view class="summary-item" wx:if="{{result.housingFundRate}}">
+        <text class="summary-label">公积金比例</text>
+        <text class="summary-value">{{result.housingFundRate}}%</text>
       </view>
       <view class="summary-item">
         <text class="summary-label">个人缴纳总计</text>
@@ -80,7 +95,7 @@
           <text class="detail-value">¥{{result.personal.unemployment}}</text>
         </view>
         <view class="detail-item">
-          <text class="detail-label">住房公积金（12%）</text>
+          <text class="detail-label">住房公积金（{{result.housingFundRate}}%）</text>
           <text class="detail-value">¥{{result.personal.housingFund}}</text>
         </view>
       </view>
@@ -115,7 +130,7 @@
           <text class="detail-value">¥{{result.company.maternity}}</text>
         </view>
         <view class="detail-item">
-          <text class="detail-label">住房公积金（12%）</text>
+          <text class="detail-label">住房公积金（{{result.housingFundRate}}%）</text>
           <text class="detail-value">¥{{result.company.housingFund}}</text>
         </view>
       </view>
