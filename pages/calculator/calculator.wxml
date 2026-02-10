@@ -1,0 +1,89 @@
+<view class="container">
+  <view class="header">
+    <text class="title">个税计算器</text>
+  </view>
+
+  <view class="form">
+    <view class="form-item">
+      <text class="label">{{calculationType === 'monthly' ? '月工资' : '年收入'}}（元）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="请输入金额"
+        value="{{salary}}"
+        bindinput="onSalaryInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">专项附加扣除（元/月）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="子女教育、住房贷款等"
+        value="{{specialDeduction}}"
+        bindinput="onSpecialDeductionInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">计算方式</text>
+      <radio-group bindchange="onCalculationTypeChange">
+        <label class="radio">
+          <radio value="monthly" checked="{{calculationType === 'monthly'}}" />
+          <text>月度计算</text>
+        </label>
+        <label class="radio">
+          <radio value="annual" checked="{{calculationType === 'annual'}}" />
+          <text>年度计算</text>
+        </label>
+      </radio-group>
+    </view>
+
+    <view class="button-group">
+      <button class="btn btn-primary" bindtap="calculate">计算</button>
+      <button class="btn btn-default" bindtap="reset">重置</button>
+    </view>
+  </view>
+
+  <view class="result" wx:if="{{result}}">
+    <view class="result-header">
+      <text class="result-title">计算结果（{{result.type}}）</text>
+    </view>
+    
+    <view class="result-items">
+      <view class="result-item">
+        <text class="result-label">税前收入</text>
+        <text class="result-value">¥{{result.salary || result.annualSalary}}</text>
+      </view>
+      
+      <view class="result-item">
+        <text class="result-label">五险一金</text>
+        <text class="result-value">¥{{result.insurance || result.annualInsurance}}</text>
+      </view>
+      
+      <view class="result-item">
+        <text class="result-label">专项附加扣除</text>
+        <text class="result-value">¥{{result.specialDeduction || result.annualSpecialDeduction}}</text>
+      </view>
+      
+      <view class="result-item">
+        <text class="result-label">应纳税所得额</text>
+        <text class="result-value">¥{{result.taxableIncome}}</text>
+      </view>
+      
+      <view class="result-item">
+        <text class="result-label">适用税率</text>
+        <text class="result-value">{{result.taxRate}}</text>
+      </view>
+      
+      <view class="result-item highlight">
+        <text class="result-label">应缴个税</text>
+        <text class="result-value">¥{{result.tax}}</text>
+      </view>
+      
+      <view class="result-item highlight">
+        <text class="result-label">税后收入</text>
+        <text class="result-value primary">¥{{result.afterTaxSalary}}</text>
+      </view>
+    </view>
+  </view>
+</view>
