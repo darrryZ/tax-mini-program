@@ -2,6 +2,9 @@
 const insuranceCalculator = require('../../utils/insuranceCalculator.js');
 const wxCharts = require('../../utils/wxcharts.js');
 
+const MIN_RATE = insuranceCalculator.MIN_HOUSING_FUND_RATE;
+const MAX_RATE = insuranceCalculator.MAX_HOUSING_FUND_RATE;
+
 let personalPieChart = null;
 let companyPieChart = null;
 
@@ -9,6 +12,7 @@ Page({
   data: {
     salary: '',
     housingFundBase: '',
+    housingFundRate: '',
     result: null
   },
 
@@ -28,9 +32,16 @@ Page({
     });
   },
 
+  onHousingFundRateInput: function(e) {
+    this.setData({
+      housingFundRate: e.detail.value
+    });
+  },
+
   calculate: function() {
     const salary = parseFloat(this.data.salary);
     const housingFundBase = this.data.housingFundBase ? parseFloat(this.data.housingFundBase) : null;
+    const housingFundRate = this.data.housingFundRate ? parseFloat(this.data.housingFundRate) : null;
 
     if (!salary || salary <= 0) {
       wx.showToast({
@@ -48,7 +59,15 @@ Page({
       return;
     }
 
-    const result = insuranceCalculator.calculateInsurance(salary, housingFundBase);
+    if (housingFundRate !== null && (housingFundRate < MIN_RATE || housingFundRate > MAX_RATE)) {
+      wx.showToast({
+        title: `公积金比例须在${MIN_RATE}%-${MAX_RATE}%之间`,
+        icon: 'none'
+      });
+      return;
+    }
+
+    const result = insuranceCalculator.calculateInsurance(salary, housingFundBase, null, housingFundRate);
     
     this.setData({
       result: result
@@ -116,6 +135,7 @@ Page({
     this.setData({
       salary: '',
       housingFundBase: '',
+      housingFundRate: '',
       result: null
     });
     personalPieChart = null;

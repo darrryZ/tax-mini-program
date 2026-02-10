@@ -61,6 +61,29 @@ assertEquals(insuranceResult2.housingFundBase, 8000, 'Insurance with different b
 assertEquals(insuranceResult2.personal.housingFund, 960, 'Insurance with different base: personal housing fund is correct');
 assertEquals(insuranceResult2.personalTotal, 2010, 'Insurance with different base: personal total is correct');
 
+// Test 3b: Insurance calculation with custom housing fund rate (10%)
+const insuranceResult3 = insuranceCalculator.calculateInsurance(10000, null, null, 10);
+assertEquals(insuranceResult3.salary, 10000, 'Insurance with custom rate: salary is correct');
+assertEquals(insuranceResult3.housingFundRate, 10, 'Insurance with custom rate: rate is 10%');
+assertEquals(insuranceResult3.personal.housingFund, 1000, 'Insurance with custom rate: personal housing fund is correct');
+assertEquals(insuranceResult3.company.housingFund, 1000, 'Insurance with custom rate: company housing fund is correct');
+
+// Test 3c: Insurance calculation with custom housing fund rate (7%)
+const insuranceResult4 = insuranceCalculator.calculateInsurance(10000, null, null, 7);
+assertEquals(insuranceResult4.housingFundRate, 7, 'Insurance with 7% rate: rate is 7%');
+assertEquals(insuranceResult4.personal.housingFund, 700, 'Insurance with 7% rate: personal housing fund is correct');
+
+// Test 3d: Insurance calculation with custom base and custom rate
+const insuranceResult5 = insuranceCalculator.calculateInsurance(10000, 8000, null, 8);
+assertEquals(insuranceResult5.housingFundBase, 8000, 'Insurance with custom base and rate: base is correct');
+assertEquals(insuranceResult5.housingFundRate, 8, 'Insurance with custom base and rate: rate is 8%');
+assertEquals(insuranceResult5.personal.housingFund, 640, 'Insurance with custom base and rate: personal housing fund is correct');
+
+// Test 3e: Insurance calculation with out-of-range rate (should use default 12%)
+const insuranceResult6 = insuranceCalculator.calculateInsurance(10000, null, null, 15);
+assertEquals(insuranceResult6.housingFundRate, 12, 'Insurance with invalid rate: defaults to 12%');
+assertEquals(insuranceResult6.personal.housingFund, 1200, 'Insurance with invalid rate: uses default 12%');
+
 console.log('\n=== Cost Calculator Tests ===\n');
 
 // Test 4: Enterprise cost calculation

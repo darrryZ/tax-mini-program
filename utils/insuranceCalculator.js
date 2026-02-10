@@ -11,6 +11,10 @@
  * - 住房公积金 (Housing Fund)
  */
 
+// 公积金缴纳比例范围常量
+const MIN_HOUSING_FUND_RATE = 7;  // 最小比例 7%
+const MAX_HOUSING_FUND_RATE = 12; // 最大比例 12%
+
 // 默认缴费比例 (Default contribution rates)
 const DEFAULT_RATES = {
   pension: {
@@ -45,18 +49,30 @@ const DEFAULT_RATES = {
  * @param {number} salary - 工资基数
  * @param {number} housingFundBase - 公积金缴纳基数（可选，默认与工资基数相同）
  * @param {object} rates - 自定义缴费比例（可选）
+ * @param {number} housingFundRate - 公积金缴纳比例（可选，默认12%，范围7%-12%）
  * @returns {object} 五险一金详细信息
  */
-function calculateInsurance(salary, housingFundBase, rates) {
+function calculateInsurance(salary, housingFundBase, rates, housingFundRate) {
   // Use default rates if rates is not provided or is null
   const effectiveRates = rates || DEFAULT_RATES;
   
   // Use salary as housing fund base if not provided
   const effectiveHousingFundBase = housingFundBase || salary;
   
+  // Use custom housing fund rate if provided (range 7%-12%), otherwise use default
+  let effectiveHousingFundRate = DEFAULT_RATES.housingFund.personal;
+  if (housingFundRate !== null && housingFundRate !== undefined) {
+    // Convert percentage to decimal and validate range
+    const rateDecimal = housingFundRate / 100;
+    if (rateDecimal >= MIN_HOUSING_FUND_RATE / 100 && rateDecimal <= MAX_HOUSING_FUND_RATE / 100) {
+      effectiveHousingFundRate = rateDecimal;
+    }
+  }
+  
   const result = {
     salary: parseFloat(salary.toFixed(2)),
     housingFundBase: parseFloat(effectiveHousingFundBase.toFixed(2)),
+    housingFundRate: parseFloat((effectiveHousingFundRate * 100).toFixed(1)), // Store as percentage
     personal: {},
     company: {},
     personalTotal: 0,
@@ -84,9 +100,9 @@ function calculateInsurance(salary, housingFundBase, rates) {
   result.personal.maternity = parseFloat((salary * effectiveRates.maternity.personal).toFixed(2));
   result.company.maternity = parseFloat((salary * effectiveRates.maternity.company).toFixed(2));
   
-  // 住房公积金 - 使用公积金基数
-  result.personal.housingFund = parseFloat((effectiveHousingFundBase * effectiveRates.housingFund.personal).toFixed(2));
-  result.company.housingFund = parseFloat((effectiveHousingFundBase * effectiveRates.housingFund.company).toFixed(2));
+  // 住房公积金 - 使用公积金基数和自定义比例
+  result.personal.housingFund = parseFloat((effectiveHousingFundBase * effectiveHousingFundRate).toFixed(2));
+  result.company.housingFund = parseFloat((effectiveHousingFundBase * effectiveHousingFundRate).toFixed(2));
   
   // 计算总计
   result.personalTotal = parseFloat((
@@ -117,15 +133,18 @@ function calculateInsurance(salary, housingFundBase, rates) {
  * @param {number} salary - 税前工资
  * @param {number} housingFundBase - 公积金缴纳基数
  * @param {object} rates - 缴费比例
+ * @param {number} housingFundRate - 公积金缴纳比例
  * @returns {number} 扣除五险一金后的工资
  */
-function getNetSalaryAfterInsurance(salary, housingFundBase, rates) {
-  const insurance = calculateInsurance(salary, housingFundBase, rates);
+function getNetSalaryAfterInsurance(salary, housingFundBase, rates, housingFundRate) {
+  const insurance = calculateInsurance(salary, housingFundBase, rates, housingFundRate);
   return parseFloat((salary - insurance.personalTotal).toFixed(2));
 }
 
 module.exports = {
   calculateInsurance,
   getNetSalaryAfterInsurance,
-  DEFAULT_RATES
+  DEFAULT_RATES,
+  MIN_HOUSING_FUND_RATE,
+  MAX_HOUSING_FUND_RATE
 };
