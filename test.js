@@ -54,6 +54,13 @@ assertEquals(insuranceResult.total, 6230, 'Insurance: grand total is correct');
 assertEquals(insuranceResult.personal.pension, 800, 'Insurance: personal pension is correct');
 assertEquals(insuranceResult.company.housingFund, 1200, 'Insurance: company housing fund is correct');
 
+// Test 3a: Insurance calculation with different housing fund base
+const insuranceResult2 = insuranceCalculator.calculateInsurance(10000, 8000);
+assertEquals(insuranceResult2.salary, 10000, 'Insurance with different base: salary is correct');
+assertEquals(insuranceResult2.housingFundBase, 8000, 'Insurance with different base: housing fund base is correct');
+assertEquals(insuranceResult2.personal.housingFund, 960, 'Insurance with different base: personal housing fund is correct');
+assertEquals(insuranceResult2.personalTotal, 2010, 'Insurance with different base: personal total is correct');
+
 console.log('\n=== Cost Calculator Tests ===\n');
 
 // Test 4: Enterprise cost calculation
