@@ -14,6 +14,17 @@
         bindinput="onSalaryInput" />
     </view>
 
+    <view class="form-item">
+      <text class="label">公积金缴纳基数（元）</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="不填则与工资基数相同"
+        value="{{housingFundBase}}"
+        bindinput="onHousingFundBaseInput" />
+      <text class="hint">提示：公积金缴纳基数可与工资基数不同</text>
+    </view>
+
     <view class="button-group">
       <button class="btn btn-primary" bindtap="calculate">计算</button>
       <button class="btn btn-default" bindtap="reset">重置</button>
@@ -26,6 +37,14 @@
     </view>
     
     <view class="summary">
+      <view class="summary-item" wx:if="{{result.salary !== result.housingFundBase}}">
+        <text class="summary-label">工资基数</text>
+        <text class="summary-value">¥{{result.salary}}</text>
+      </view>
+      <view class="summary-item" wx:if="{{result.salary !== result.housingFundBase}}">
+        <text class="summary-label">公积金基数</text>
+        <text class="summary-value">¥{{result.housingFundBase}}</text>
+      </view>
       <view class="summary-item">
         <text class="summary-label">个人缴纳总计</text>
         <text class="summary-value personal">¥{{result.personalTotal}}</text>

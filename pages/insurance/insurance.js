@@ -4,6 +4,7 @@ const insuranceCalculator = require('../../utils/insuranceCalculator.js');
 Page({
   data: {
     salary: '',
+    housingFundBase: '',
     result: null
   },
 
@@ -17,8 +18,15 @@ Page({
     });
   },
 
+  onHousingFundBaseInput: function(e) {
+    this.setData({
+      housingFundBase: e.detail.value
+    });
+  },
+
   calculate: function() {
     const salary = parseFloat(this.data.salary);
+    const housingFundBase = this.data.housingFundBase ? parseFloat(this.data.housingFundBase) : null;
 
     if (!salary || salary <= 0) {
       wx.showToast({
@@ -28,7 +36,15 @@ Page({
       return;
     }
 
-    const result = insuranceCalculator.calculateInsurance(salary);
+    if (housingFundBase !== null && housingFundBase <= 0) {
+      wx.showToast({
+        title: '公积金基数必须大于0',
+        icon: 'none'
+      });
+      return;
+    }
+
+    const result = insuranceCalculator.calculateInsurance(salary, housingFundBase);
     
     this.setData({
       result: result
@@ -38,6 +54,7 @@ Page({
   reset: function() {
     this.setData({
       salary: '',
+      housingFundBase: '',
       result: null
     });
   }

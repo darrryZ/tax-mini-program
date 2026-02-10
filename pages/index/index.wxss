@@ -46,6 +46,89 @@
   background-color: #f8f8f8;
 }
 
+.icon-wrapper {
+  margin-right: 30rpx;
+}
+
+.icon-svg {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.icon-emoji {
+  font-size: 50rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.calculator-item:active .icon-svg {
+  transform: scale(0.95) rotate(5deg);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+.icon-tax {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  animation: pulse-tax 2s ease-in-out infinite;
+}
+
+.icon-insurance {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  animation: pulse-insurance 2s ease-in-out infinite;
+}
+
+.icon-enterprise {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  animation: pulse-enterprise 2s ease-in-out infinite;
+}
+
+.icon-loan {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  animation: pulse-loan 2s ease-in-out infinite;
+}
+
+@keyframes pulse-tax {
+  0%, 100% {
+    box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.5);
+  }
+}
+
+@keyframes pulse-insurance {
+  0%, 100% {
+    box-shadow: 0 4rpx 12rpx rgba(240, 147, 251, 0.3);
+  }
+  50% {
+    box-shadow: 0 8rpx 24rpx rgba(240, 147, 251, 0.5);
+  }
+}
+
+@keyframes pulse-enterprise {
+  0%, 100% {
+    box-shadow: 0 4rpx 12rpx rgba(79, 172, 254, 0.3);
+  }
+  50% {
+    box-shadow: 0 8rpx 24rpx rgba(79, 172, 254, 0.5);
+  }
+}
+
+@keyframes pulse-loan {
+  0%, 100% {
+    box-shadow: 0 4rpx 12rpx rgba(67, 233, 123, 0.3);
+  }
+  50% {
+    box-shadow: 0 8rpx 24rpx rgba(67, 233, 123, 0.5);
+  }
+}
+
 .icon {
   font-size: 60rpx;
   margin-right: 30rpx;
