@@ -49,6 +49,11 @@
       <text class="result-title">计算结果（{{result.type}}）</text>
     </view>
     
+    <view class="chart-container">
+      <text class="chart-title">收入占比分布</text>
+      <canvas canvas-id="taxPieCanvas" class="chart-canvas"></canvas>
+    </view>
+    
     <view class="result-items">
       <view class="result-item">
         <text class="result-label">税前收入</text>

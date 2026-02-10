@@ -1,5 +1,9 @@
 // pages/insurance/insurance.js
 const insuranceCalculator = require('../../utils/insuranceCalculator.js');
+const wxCharts = require('../../utils/wxcharts.js');
+
+let personalPieChart = null;
+let companyPieChart = null;
 
 Page({
   data: {
@@ -48,6 +52,63 @@ Page({
     
     this.setData({
       result: result
+    }, () => {
+      // Render charts after data is set
+      this.renderCharts();
+    });
+  },
+
+  renderCharts: function() {
+    const result = this.data.result;
+    if (!result) return;
+
+    // Get system info for chart width
+    const systemInfo = wx.getSystemInfoSync();
+    const windowWidth = systemInfo.windowWidth;
+    const chartWidth = windowWidth * 0.9; // 90% of screen width
+
+    // Personal insurance breakdown
+    const personalData = [
+      { name: '养老保险', data: result.personal.pension, color: '#597ef7' },
+      { name: '医疗保险', data: result.personal.medical, color: '#73d13d' },
+      { name: '失业保险', data: result.personal.unemployment, color: '#ff9c6e' },
+      { name: '住房公积金', data: result.personal.housingFund, color: '#ffc53d' }
+    ].filter(item => item.data > 0);
+
+    personalPieChart = new wxCharts({
+      canvasId: 'personalPieCanvas',
+      type: 'pie',
+      series: personalData,
+      width: chartWidth,
+      height: 300,
+      dataLabel: true,
+      legend: true,
+      animation: true,
+      background: '#ffffff',
+      padding: 5
+    });
+
+    // Company insurance breakdown
+    const companyData = [
+      { name: '养老保险', data: result.company.pension, color: '#597ef7' },
+      { name: '医疗保险', data: result.company.medical, color: '#73d13d' },
+      { name: '失业保险', data: result.company.unemployment, color: '#ff9c6e' },
+      { name: '工伤保险', data: result.company.injury, color: '#ff85c0' },
+      { name: '生育保险', data: result.company.maternity, color: '#9254de' },
+      { name: '住房公积金', data: result.company.housingFund, color: '#ffc53d' }
+    ].filter(item => item.data > 0);
+
+    companyPieChart = new wxCharts({
+      canvasId: 'companyPieCanvas',
+      type: 'pie',
+      series: companyData,
+      width: chartWidth,
+      height: 300,
+      dataLabel: true,
+      legend: true,
+      animation: true,
+      background: '#ffffff',
+      padding: 5
     });
   },
 
@@ -57,5 +118,7 @@ Page({
       housingFundBase: '',
       result: null
     });
+    personalPieChart = null;
+    companyPieChart = null;
   }
 });
