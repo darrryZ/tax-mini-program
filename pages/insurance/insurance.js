@@ -2,6 +2,9 @@
 const insuranceCalculator = require('../../utils/insuranceCalculator.js');
 const wxCharts = require('../../utils/wxcharts.js');
 
+const MIN_RATE = insuranceCalculator.MIN_HOUSING_FUND_RATE;
+const MAX_RATE = insuranceCalculator.MAX_HOUSING_FUND_RATE;
+
 let personalPieChart = null;
 let companyPieChart = null;
 
@@ -56,9 +59,9 @@ Page({
       return;
     }
 
-    if (housingFundRate !== null && (housingFundRate < 7 || housingFundRate > 12)) {
+    if (housingFundRate !== null && (housingFundRate < MIN_RATE || housingFundRate > MAX_RATE)) {
       wx.showToast({
-        title: '公积金比例须在7%-12%之间',
+        title: `公积金比例须在${MIN_RATE}%-${MAX_RATE}%之间`,
         icon: 'none'
       });
       return;

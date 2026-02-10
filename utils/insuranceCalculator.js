@@ -11,6 +11,10 @@
  * - 住房公积金 (Housing Fund)
  */
 
+// 公积金缴纳比例范围常量
+const MIN_HOUSING_FUND_RATE = 7;  // 最小比例 7%
+const MAX_HOUSING_FUND_RATE = 12; // 最大比例 12%
+
 // 默认缴费比例 (Default contribution rates)
 const DEFAULT_RATES = {
   pension: {
@@ -60,7 +64,7 @@ function calculateInsurance(salary, housingFundBase, rates, housingFundRate) {
   if (housingFundRate !== null && housingFundRate !== undefined) {
     // Convert percentage to decimal and validate range
     const rateDecimal = housingFundRate / 100;
-    if (rateDecimal >= 0.07 && rateDecimal <= 0.12) {
+    if (rateDecimal >= MIN_HOUSING_FUND_RATE / 100 && rateDecimal <= MAX_HOUSING_FUND_RATE / 100) {
       effectiveHousingFundRate = rateDecimal;
     }
   }
@@ -140,5 +144,7 @@ function getNetSalaryAfterInsurance(salary, housingFundBase, rates, housingFundR
 module.exports = {
   calculateInsurance,
   getNetSalaryAfterInsurance,
-  DEFAULT_RATES
+  DEFAULT_RATES,
+  MIN_HOUSING_FUND_RATE,
+  MAX_HOUSING_FUND_RATE
 };
