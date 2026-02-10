@@ -21,6 +21,7 @@
   border-radius: 20rpx;
   padding: 40rpx;
   margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
 }
 
 .form-item {
@@ -113,6 +114,7 @@
   border-radius: 20rpx;
   overflow: hidden;
   margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
 }
 
 .result-header {
@@ -172,6 +174,11 @@
   background-color: #f8f8f8;
   border-top: 1rpx solid #f0f0f0;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.schedule-toggle:active {
+  background-color: #ececec;
 }
 
 .toggle-text {
@@ -219,4 +226,9 @@
   padding: 30rpx;
   color: #07c160;
   font-size: 28rpx;
+  transition: all 0.3s ease;
+}
+
+.load-more:active {
+  background-color: #f8f8f8;
 }
