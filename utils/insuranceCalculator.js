@@ -43,15 +43,20 @@ const DEFAULT_RATES = {
  * 计算五险一金
  * Calculate social insurance and housing fund
  * @param {number} salary - 工资基数
+ * @param {number} housingFundBase - 公积金缴纳基数（可选，默认与工资基数相同）
  * @param {object} rates - 自定义缴费比例（可选）
  * @returns {object} 五险一金详细信息
  */
-function calculateInsurance(salary, rates) {
+function calculateInsurance(salary, housingFundBase, rates) {
   // Use default rates if rates is not provided or is null
   const effectiveRates = rates || DEFAULT_RATES;
   
+  // Use salary as housing fund base if not provided
+  const effectiveHousingFundBase = housingFundBase || salary;
+  
   const result = {
     salary: parseFloat(salary.toFixed(2)),
+    housingFundBase: parseFloat(effectiveHousingFundBase.toFixed(2)),
     personal: {},
     company: {},
     personalTotal: 0,
@@ -79,9 +84,9 @@ function calculateInsurance(salary, rates) {
   result.personal.maternity = parseFloat((salary * effectiveRates.maternity.personal).toFixed(2));
   result.company.maternity = parseFloat((salary * effectiveRates.maternity.company).toFixed(2));
   
-  // 住房公积金
-  result.personal.housingFund = parseFloat((salary * effectiveRates.housingFund.personal).toFixed(2));
-  result.company.housingFund = parseFloat((salary * effectiveRates.housingFund.company).toFixed(2));
+  // 住房公积金 - 使用公积金基数
+  result.personal.housingFund = parseFloat((effectiveHousingFundBase * effectiveRates.housingFund.personal).toFixed(2));
+  result.company.housingFund = parseFloat((effectiveHousingFundBase * effectiveRates.housingFund.company).toFixed(2));
   
   // 计算总计
   result.personalTotal = parseFloat((
@@ -110,11 +115,12 @@ function calculateInsurance(salary, rates) {
 /**
  * 获取实际到手工资
  * @param {number} salary - 税前工资
+ * @param {number} housingFundBase - 公积金缴纳基数
  * @param {object} rates - 缴费比例
  * @returns {number} 扣除五险一金后的工资
  */
-function getNetSalaryAfterInsurance(salary, rates) {
-  const insurance = calculateInsurance(salary, rates);
+function getNetSalaryAfterInsurance(salary, housingFundBase, rates) {
+  const insurance = calculateInsurance(salary, housingFundBase, rates);
   return parseFloat((salary - insurance.personalTotal).toFixed(2));
 }
 

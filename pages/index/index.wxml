@@ -11,7 +11,11 @@
       wx:key="id"
       data-url="{{item.url}}"
       bindtap="navigateToCalculator">
-      <view class="icon">{{item.icon}}</view>
+      <view class="icon-wrapper">
+        <view class="icon-svg {{item.iconClass}}">
+          <text class="icon-emoji">{{item.icon}}</text>
+        </view>
+      </view>
       <view class="info">
         <text class="name">{{item.name}}</text>
         <text class="description">{{item.description}}</text>
