@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="header">
+    <text class="title">税务计算工具</text>
+    <text class="subtitle">个税、五险一金、企业成本、贷款计算</text>
+  </view>
+
+  <view class="calculator-list">
+    <view 
+      class="calculator-item" 
+      wx:for="{{calculators}}" 
+      wx:key="id"
+      data-url="{{item.url}}"
+      bindtap="navigateToCalculator">
+      <view class="icon">{{item.icon}}</view>
+      <view class="info">
+        <text class="name">{{item.name}}</text>
+        <text class="description">{{item.description}}</text>
+      </view>
+      <view class="arrow">›</view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="footer-text">选择一个计算器开始使用</text>
+  </view>
+</view>
